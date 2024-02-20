@@ -158,5 +158,19 @@
 * Скачиваем Kiauh и переходим в директорию Kiauh:  
   ```
   cd ~ && git clone https://github.com/dw-0/kiauh.git
+  ```
+* Запускаем скрипт Kiauh:  
+  ```
+  ./kiauh/kiauh.sh
   ```  
+* Вас встретит следующее окно. Нажимаем ```1```, затем устанавливаем по очереди: Klipper, Moonraker, Mainsail, KlipperScreen, Telegram Bot, Crowsnest, Mobileraker:  
+   
+  ![](https://raw.githubusercontent.com/konk22/opz3_ubuntu_klipper/main/images/kiauh_1.png)  
+    
+  ![](https://raw.githubusercontent.com/konk22/opz3_ubuntu_klipper/main/images/kiauh_1.png)  
+    
+* После установки всех пакетов нажимаем ```B``` и выходим на начальное окно. Оно должно выглядеть так:  
+    
+  ![](https://raw.githubusercontent.com/konk22/opz3_ubuntu_klipper/main/images/kiauh_3.png)  
+  
 ## На этом подготовка дистрибутива Ubuntu для установки Klipper завершена.
