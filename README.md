@@ -142,7 +142,7 @@
   ```
   sudo bash -c "echo needs_root_rights=yes>>/etc/X11/Xwrapper.config"
   ```
-* Отключаем ненужные службы для ускорения загрузки:
+* Отключаем ненужные службы для ускорения загрузки. ПРИМЕЧАНИЕ: если используется bluetooth, то ```bluetooth.service``` необходимо удалить из команд:
   ```
   sudo apt-get remove networkd-dispatcher
   sudo systemctl stop systemd-networkd.service dnsmasq.service lircd.service containerd.service bluetooth.service
