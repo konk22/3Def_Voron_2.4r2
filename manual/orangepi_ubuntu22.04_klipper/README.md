@@ -1,4 +1,4 @@
-# Инструкция по подготовка дистрибутива Ubuntu 22.04 к установке Klipper на Orangepi Zero 3 
+# Инструкция по подготовка дистрибутива Ubuntu 22.04 и установке Klipper на Orangepi Zero 3 
 ## Подготовка:  
 * Для установки потребуется скачать дистрибутив Ubuntu 22.04 для Orangepi Zero 3:  
   ```
@@ -172,5 +172,14 @@
 * После установки всех пакетов нажимаем ```B``` и выходим на начальное окно. Оно должно выглядеть так:  
     
   ![](https://raw.githubusercontent.com/konk22/opz3_ubuntu_klipper/main/images/kiauh_3.png)  
-  
-## На этом подготовка дистрибутива Ubuntu для установки Klipper завершена.
+
+* Теперь устанавливаем K-ShakeTune:
+  ```
+  wget -O - https://raw.githubusercontent.com/Frix-x/klippain-shaketune/main/install.sh | bash
+  ```
+* Когда будет создан файл конфига ```print.cfg``` в начало файла необходимо будет добавить:
+  ```
+  [include K-ShakeTune/*.cfg]
+  ```
+    
+## На этом подготовка дистрибутива Ubuntu и установка Klipper завершена.
