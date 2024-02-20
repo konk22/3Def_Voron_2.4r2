@@ -64,7 +64,8 @@
   python3 ~/CanBoot/scripts/flash_can.py -d  /dev/serial/by-id/usb-CanBoot_stm32f407xx_<серийный номер>-if00
   ```  
 
-  ![](https://raw.githubusercontent.com/konk22/opz3_ubuntu_klipper/main/images/flash_klipper_MKSMonster8v2.png)  
+  ![](https://raw.githubusercontent.com/konk22/opz3_ubuntu_klipper/main/images/flash_klipper_MKSMonster8v2.png)
+    
 * Настраиваем интерфейс CAN0 на Orangepi Zero 3. Создадим файл интерфейса:  
   ```
   sudo nano /etc/network/interfaces.d/can0
