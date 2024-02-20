@@ -141,6 +141,12 @@
 * Для правильной работы KlipperScreen необходимо добавить настройку в конфиг xorg:  
   ```
   sudo bash -c "echo needs_root_rights=yes>>/etc/X11/Xwrapper.config"
+  ```
+* Отключаем ненужные службы для ускорения загрузки:
+  ```
+  sudo apt-get remove networkd-dispatcher
+  sudo systemctl stop systemd-networkd.service dnsmasq.service lircd.service containerd.service bluetooth.service
+  sudo systemctl disable systemd-networkd.service dnsmasq.service lircd.service containerd.service bluetooth.service
   ```  
 * Перезагружаем:  
   ```
