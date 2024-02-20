@@ -1,5 +1,5 @@
-# Инструкция по подготовка дистрибутива Ubuntu 22.04 и установке Klipper на Orangepi Zero 3 
-## Подготовка:  
+# Инструкция по подготовке дистрибутива Ubuntu 22.04 и установке Klipper на Orangepi Zero 3 
+
 * Для установки потребуется скачать дистрибутив Ubuntu 22.04 для Orangepi Zero 3:  
   ```
   http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/service-and-support/Orange-Pi-Zero-3.html
@@ -91,10 +91,6 @@
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
   $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-  ```  
-* Исправить ошибку dnsmasq. Добавим или раскоментируем строку ```bind-interfaces```:  
-  ```
-  sudo nano /etc/dnsmasq.conf
   ```  
 * Обновим систему. Ошибок и предупреждений не должно быть:  
   ```
