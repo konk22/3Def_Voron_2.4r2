@@ -50,7 +50,7 @@
   ```
   sudo EDITOR=nano visudo
   ```  
-* Снова перезагружаем и подключаемся через SSH после перезагрузки под пользователем pi:  
+* Снова перезагружаем и подключаемся через SSH под пользователем pi:  
   ```
   reboot
   ```  
@@ -60,25 +60,35 @@
   папки orangepi не должно быть в ответе
   su orangepi
   user orangepi does not exist or the user entry does not contain all the required fields
-  ```  
+  ```
+* Отключим поддержку ipv6:
+  ```
+  sudo nano /etc/sysctl.conf
+  ```
+  * Добавим в конец файла:
+    ```
+    net.ipv6.conf.all.disable_ipv6 = 1
+    net.ipv6.conf.default.disable_ipv6 = 1
+    net.ipv6.conf.lo.disable_ipv6 = 1
+    ```
 * Отключим китайские репозитории и добавим глобальные:  
   ```
   sudo nano /etc/apt/sources.list
   ```  
-* Закоментируем все строки и в конец добавим следующий текст:  
-  ```
-  deb http://ports.ubuntu.com/ jammy main restricted universe multiverse
-  #deb-src http://ports.ubuntu.com/ jammy main restricted universe multiverse
-
-  deb http://ports.ubuntu.com/ jammy-security main restricted universe multiverse
-  #deb-src http://ports.ubuntu.com/ jammy-security main restricted universe multiverse
-
-  deb http://ports.ubuntu.com/ jammy-updates main restricted universe multiverse
-  #deb-src http://ports.ubuntu.com/ jammy-updates main restricted universe multiverse
-
-  deb http://ports.ubuntu.com/ jammy-backports main restricted universe multiverse
-  #deb-src http://ports.ubuntu.com/ jammy-backports main restricted universe multiverse
-  ```  
+  * Закоментируем все строки и в конец добавим следующее:  
+    ```
+    deb http://ports.ubuntu.com/ jammy main restricted universe multiverse
+    #deb-src http://ports.ubuntu.com/ jammy main restricted universe multiverse
+  
+    deb http://ports.ubuntu.com/ jammy-security main restricted universe multiverse
+    #deb-src http://ports.ubuntu.com/ jammy-security main restricted universe multiverse
+  
+    deb http://ports.ubuntu.com/ jammy-updates main restricted universe multiverse
+    #deb-src http://ports.ubuntu.com/ jammy-updates main restricted universe multiverse
+  
+    deb http://ports.ubuntu.com/ jammy-backports main restricted universe multiverse
+    #deb-src http://ports.ubuntu.com/ jammy-backports main restricted universe multiverse
+    ```  
 * Отключим китайский репозиторий docker. Закоментируем все записи в файле:  
   ```
   sudo nano /etc/apt/sources.list.d/docker.list
@@ -110,12 +120,12 @@
   ```
   hostnamectl set-hostname Voron
   ```  
-* Удаляем логотип Ubuntu:  
+* Удаляем логотип загрезки Ubuntu:  
   ```
   sudo rm /usr/share/plymouth/themes/spinner/bgrt-fallback.png
   sudo rm /usr/share/plymouth/ubuntu-logo.png
   ```  
-* Подготавливаем свой логотип в формате png с прозрачным фоном, размер 800x450, изображение должно быть немного выше середины картинки, или копируем его из предложенного примера в домашнюю директорию, а затем перемещаем в директорию темы по умолчанию:  
+* Подготавливаем свой логотип в формате png с прозрачным фоном, размер 800x450, изображение должно быть немного выше середины картинки, или копируем логотип из предложенного примера в домашнюю директорию, а затем перемещаем в директорию темы по умолчанию:  
   ```
   sudo wget https://raw.githubusercontent.com/konk22/opz3_ubuntu_klipper/main/watermark800x450.png 
   sudo cp /home/pi/watermark800x450.png /usr/share/plymouth/themes/spinner/watermark.png
@@ -133,7 +143,7 @@
   ```
   sudo nano /boot/orangepiEnv.txt
   ```  
-* Для правильной работы KlipperScreen необходимо добавить настройку в конфиг xorg:  
+* Для правильной работы KlipperScreen необходимо добавить следующую строку в конфиг xorg:  
   ```
   sudo bash -c "echo needs_root_rights=yes>>/etc/X11/Xwrapper.config"
   ```
