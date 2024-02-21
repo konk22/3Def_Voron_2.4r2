@@ -6,4 +6,4 @@
   * тип заполнения: гироидный  
 * После печати необходимо вырезать безворсовую салфетку и проложить ее между прижимом для салфетки и корпусом фильтра, вторую салфетку необходимо проложить между крышкой и вторым прижимом. При необходимости капнуть супер-клей в стык крышки и прижима для салфетки
 
-* ![](https://raw.githubusercontent.com/konk22/3Def_Voron_2.4r2/main/images/carbon_cartridge.png)  
+  ![](https://raw.githubusercontent.com/konk22/3Def_Voron_2.4r2/main/images/carbon_cartridge.png)  
