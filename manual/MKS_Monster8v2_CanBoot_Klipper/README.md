@@ -118,6 +118,6 @@
   [mcu]
   canbus_uuid: <ВСТАВИТЬ UUID>
   ```
-* Проверяем раздел ```Настройки->Системная информация``` Mainsail. Должно быть видно ```mcu (stm32f407xx)```, а так же версии прошивок Klipper и ```mcu (stm32f407xx)``` должны быть одинаковые:  
+* Проверяем раздел ```Настройки->Системная информация``` Mainsail. Должен появиться ```mcu (stm32f407xx)```, а так же версии прошивок ```host (aarch64, 64bit)``` и ```mcu (stm32f407xx)``` должны быть одинаковые:  
 
   ![](https://raw.githubusercontent.com/konk22/opz3_ubuntu_klipper/main/images/monitor.png)  
