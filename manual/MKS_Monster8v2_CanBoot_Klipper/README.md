@@ -1,4 +1,5 @@
-## Установка CanBoot и прошивки Klipper на MKS Monster8v2:  
+## Установка на MKS Monster8v2 CanBoot и прошивки Klipper:  
+
 * Устанавливаем CanBoot:  
   ```
   cd ~
@@ -40,19 +41,19 @@
 * Проверяем загружен ли CanBoot. Дважды нажимаем Reset, затем вводим команды:  
   ```
   lsusb
-  в ответ должны получить OpenMoko stm32f407xx
+  	# в ответ должны получить OpenMoko stm32f407xx
   ls /dev/serial/by-id/
-  в ответ должны получить серийный номер устройства /dev/serial/by-id/usb-CanBoot_stm32f407xx_<серийный номер>-if00
+  	# в ответ должны получить серийный номер устройства /dev/serial/by-id/usb-CanBoot_stm32f407xx_<серийный номер>-if00
   ПРИМЕЧАНИЕ: /dev/serial/by-id/usb-CanBoot_stm32f407xx_<серийный номер>-if00 необходим для следующих шагов
   ```  
-* Компилируем прошивку для Klipper:  
+* Компилируем прошивку Klipper для Monster8v2:  
   ```
   cd ~/klipper
   make menuconfig
   ```  
 * Выставляем настройки как на картинке:
 
-![](https://raw.githubusercontent.com/konk22/opz3_ubuntu_klipper/main/images/klipper_MKSMonster8v2.png)
+  ![](https://raw.githubusercontent.com/konk22/opz3_ubuntu_klipper/main/images/klipper_MKSMonster8v2.png)
       
 * Компилируем:  
   ```
