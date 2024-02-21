@@ -75,7 +75,7 @@
   ```
   sudo nano /etc/apt/sources.list
   ```  
-  * Закоментируем все строки и в конец добавим следующее:  
+  * Закомментируем все строки и в конец добавим следующее:  
     ```
     deb http://ports.ubuntu.com/ jammy main restricted universe multiverse
     #deb-src http://ports.ubuntu.com/ jammy main restricted universe multiverse
@@ -89,7 +89,7 @@
     deb http://ports.ubuntu.com/ jammy-backports main restricted universe multiverse
     #deb-src http://ports.ubuntu.com/ jammy-backports main restricted universe multiverse
     ```  
-* Отключим китайский репозиторий docker. Закоментируем все записи в файле:  
+* Отключим китайский репозиторий docker. Закомментируем все записи в файле:  
   ```
   sudo nano /etc/apt/sources.list.d/docker.list
   ```  
@@ -120,7 +120,7 @@
   ```
   hostnamectl set-hostname Voron
   ```  
-* Удаляем логотип загрезки Ubuntu:  
+* Удаляем логотип загрузки Ubuntu:  
   ```
   sudo rm /usr/share/plymouth/themes/spinner/bgrt-fallback.png
   sudo rm /usr/share/plymouth/ubuntu-logo.png
