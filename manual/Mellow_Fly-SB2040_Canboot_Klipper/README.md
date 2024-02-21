@@ -65,6 +65,6 @@
 
   ![](https://raw.githubusercontent.com/konk22/opz3_ubuntu_klipper/main/images/flash_klipper_Fly-SB2040.png)  
 
-* Проверяем раздел ```Настройки->Системная информация``` Mainsail. Должно быть видно ```mcu(stm32f407xx)```, ```mcu sb2040(rp2040)``` и версии прошивок Klipper везде должны быть одинаковые:  
+* Проверяем раздел ```Настройки->Системная информация``` Mainsail. Должно быть видно ```mcu sb2040(rp2040)``` и версии прошивок Klipper везде должны быть одинаковые:  
 
   ![](https://raw.githubusercontent.com/konk22/opz3_ubuntu_klipper/main/images/monitor.png)  
