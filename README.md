@@ -22,7 +22,8 @@
   	* KlipperScreen;
   	* Telegram Bot;
   	* Crowsnest;
-  	* Mobileraker  
+  	* Mobileraker;
+  	* K-ShakeTune  
   
 * Дополнения:  
   	* Система очистки сопла;  
