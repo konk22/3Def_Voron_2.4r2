@@ -46,7 +46,7 @@
   ```
   sudo killall -9 -u orangepi && sudo deluser --remove-all-files orangepi
   ```  
-* Настраиваем поведение sudo. Меняем строку ```%sudo   ALL=(ALL:ALL) ALL``` на строку ```%sudo   ALL=(ALL:ALL) ALL```:  
+* Настраиваем поведение sudo. Меняем строку ```%sudo   ALL=(ALL:ALL) ALL``` на строку ```%sudo   ALL=NOPASSWD: ALL```:  
   ```
   sudo EDITOR=nano visudo
   ```  
@@ -127,7 +127,7 @@
   ```  
 * Подготавливаем свой логотип в формате png с прозрачным фоном, размер 800x450, изображение должно быть немного выше середины картинки, или копируем логотип из предложенного примера в домашнюю директорию, а затем перемещаем в директорию темы по умолчанию:  
   ```
-  sudo wget https://raw.githubusercontent.com/konk22/opz3_ubuntu_klipper/main/watermark800x450.png 
+  sudo wget https://raw.githubusercontent.com/konk22/3Def_Voron_2.4r2/main/images/watermark800x450.png 
   sudo cp /home/pi/watermark800x450.png /usr/share/plymouth/themes/spinner/watermark.png
   ```  
 * Копируем логотип загрузки системы в директорию plymouth:  
