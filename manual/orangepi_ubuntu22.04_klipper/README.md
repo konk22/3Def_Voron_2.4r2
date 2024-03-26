@@ -108,7 +108,7 @@
   ```  
 * Установим пакеты необходимые для работы KlipperScreen:  
   ```
-  sudo apt install xorg xinit xserver-xorg-legacy libjpeg-dev zlib1g-dev python3-pip python3-dev libatlas-base-dev python3-gi-cairo python3-virtualenv gir1.2-gtk-3.0 virtualenv matchbox-keyboard wireless-tools xdotool xinput x11-xserver-utils libopenjp2-7 python3-distutils python3-gi python3-setuptools python3-wheel
+  sudo apt install xorg xinit xserver-xorg-legacy libjpeg-dev zlib1g-dev python3-pip python3-dev libatlas-base-dev python3-gi-cairo python3-virtualenv gir1.2-gtk-3.0 virtualenv matchbox-keyboard wireless-tools xdotool xinput x11-xserver-utils libopenjp2-7 python3-distutils python3-gi python3-setuptools python3-wheel python3-can
   pip3 install vext
   pip3 install vext.gi
   ```  
