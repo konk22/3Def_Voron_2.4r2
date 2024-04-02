@@ -3,7 +3,7 @@
 * Устанавливаем CanBoot:  
   ```
   cd ~
-  git clone https://github.com/Arksine/CanBoot
+  git clone https://github.com/Arksine/katapult
   ```  
 * Устанавливаем Pyserial:  
   ```
@@ -22,7 +22,7 @@
     
 * Компилируем прошивку CanBoot для MKS Monster8v2:  
   ```
-  cd CanBoot
+  cd katapult
   make menuconfig
   ```  
 * Выставляем настройки как на картинке:  
@@ -36,15 +36,15 @@
   ```  
 * Прошиваем CanBoot в MKS Monster8v2. ПРИМЕЧАНИЕ. Если после вышеизложенного вы видите ошибку, не волнуйтесь, все в порядке, если у вас есть надпись «Файл загружен успешно» в строке перед ошибкой:  
   ```
-  sudo dfu-util -a 0 -D ~/CanBoot/out/canboot.bin --dfuse-address 0x08000000:force:mass-erase:leave -d 0483:df11
+  sudo dfu-util -a 0 -D ~/katapult/out/canboot.bin --dfuse-address 0x08000000:force:mass-erase:leave -d 0483:df11
   ```  
 * Проверяем загружен ли CanBoot. Дважды нажимаем Reset, затем вводим команды:  
   ```
   lsusb
   	# в ответ должны получить OpenMoko stm32f407xx
   ls /dev/serial/by-id/
-  	# в ответ должны получить серийный номер устройства /dev/serial/by-id/usb-CanBoot_stm32f407xx_<серийный номер>-if00
-  ПРИМЕЧАНИЕ: /dev/serial/by-id/usb-CanBoot_stm32f407xx_<серийный номер>-if00 необходим для следующих шагов
+  	# в ответ должны получить серийный номер устройства /dev/serial/by-id/usb-katapult_stm32f407xx_<серийный номер>-if00
+  ПРИМЕЧАНИЕ: /dev/serial/by-id/usb-katapult_stm32f407xx_<серийный номер>-if00 необходим для следующих шагов
   ```  
 * Компилируем прошивку Klipper для Monster8v2:  
   ```
@@ -60,9 +60,9 @@
   make clean
   make
   ```  
-* Прошиваем MKS Monster8v2 только что скомпилированной прошивкой Klipper через CanBoot:  
+* Прошиваем MKS Monster8v2 только что скомпилированной прошивкой Klipper через katapult:  
   ```
-  python3 ~/CanBoot/scripts/flash_can.py -d  /dev/serial/by-id/usb-CanBoot_stm32f407xx_<серийный номер>-if00
+  python3 ~/katapult/scripts/flash_can.py -d  /dev/serial/by-id/usb-CanBoot_stm32f407xx_<серийный номер>-if00
   ```  
 
   ![](https://raw.githubusercontent.com/konk22/opz3_ubuntu_klipper/main/images/flash_klipper_MKSMonster8v2.png)
@@ -98,7 +98,7 @@
   
 * Подключаем питание 220 к принтеру и проверяем видит ли Orangepi Zero 3 наш MKS Monster8v2:  
   ```
-  ~/CanBoot/scripts/flash_can.py -i can0 -q
+  ~/katapult/scripts/flash_can.py -i can0 -q
   ```  
 
   ![](https://raw.githubusercontent.com/konk22/opz3_ubuntu_klipper/main/images/uuid_msu.png)  
@@ -109,7 +109,7 @@
 
 * Получаем UUID MKS Monster8v2. ПРИМЕЧАНИЕ: Команда возвращает UUID только для неинициализарованных MCU в Klipper (printer.cfg):  
   ```
-  ~/CanBoot/scripts/flash_can.py -i can0 -q
+  ~/katapult/scripts/flash_can.py -i can0 -q
   ```  
   ![](https://raw.githubusercontent.com/konk22/opz3_ubuntu_klipper/main/images/uuid_msu2.png)  
     
