@@ -36,7 +36,7 @@
   ```  
 * Прошиваем CanBoot в MKS Monster8v2. ПРИМЕЧАНИЕ. Если после вышеизложенного вы видите ошибку, не волнуйтесь, все в порядке, если у вас есть надпись «Файл загружен успешно» в строке перед ошибкой:  
   ```
-  sudo dfu-util -a 0 -D ~/katapult/out/canboot.bin --dfuse-address 0x08000000:force:mass-erase:leave -d 0483:df11
+  sudo dfu-util -a 0 -D ~/katapult/out/katapult.bin --dfuse-address 0x08000000:force:mass-erase:leave -d 0483:df11
   ```  
 * Проверяем загружен ли CanBoot. Дважды нажимаем Reset, затем вводим команды:  
   ```
