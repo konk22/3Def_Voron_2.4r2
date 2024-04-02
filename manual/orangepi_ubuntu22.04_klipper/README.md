@@ -112,10 +112,6 @@
   pip3 install vext
   pip3 install vext.gi
   ```  
-* Если необходимо, то обновим wiringpi:  
-  ```
-  sudo apt install --only-upgrade wiringpi
-  ```  
 * Меняем имя хоста. Я выбрал имя ```Voron```:  
   ```
   hostnamectl set-hostname Voron
