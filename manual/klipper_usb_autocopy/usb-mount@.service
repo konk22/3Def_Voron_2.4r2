@@ -1,0 +1,8 @@
+[Unit]
+Description=Mount USB Drive on %i
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+ExecStart=/usr/bin/mountcopy add %i
+ExecStop=/usr/bin/mountcopy remove %i
