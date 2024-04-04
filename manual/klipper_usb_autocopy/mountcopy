@@ -1,0 +1,65 @@
+#!/bin/sh
+
+export PATH=/bin:/usr/bin
+
+
+# CONSTANTS
+PATTERN="*.gcode"
+
+# For Raspberry Pi use
+DESTINATION="/home/pi/printer_data/gcodes"
+
+ACTION=${1:-}
+device=${2:-}
+
+do_mount() {
+
+  if [ -z "$device" ]; then
+    echo "Missing block device name!" >>/tmp/mountcopy.log
+    exit 1
+  fi
+
+  mnt=$(mktemp -d)
+  filesystem=$(lsblk -no FSTYPE "/dev/$device")
+
+  if [ "$filesystem" = "vfat" ]; then
+      mount -t vfat -o codepage=866,iocharset=utf8 "/dev/$device" "$mnt" 2>>/tmp/mountcopy.log || exit 106
+  elif [ "$filesystem" = "exfat" ]; then
+      mount -t exfat -o utf8 "/dev/$device" "$mnt" 2>>/tmp/mountcopy.log || exit 106
+  elif [ "$filesystem" = "ntfs" ] || [ "$filesystem" = "ntfs-3g" ]; then
+      mount -t ntfs-3g -o rw,nls=utf8 "/dev/$device" "$mnt" 2>>/tmp/mountcopy.log || exit 106
+  else
+      echo "Unsupported filesystem: $filesystem">>/tmp/mountcopy.log || exit 106
+      exit 107
+  fi
+
+  umask 0111
+
+  echo "" > /tmp/mountcopy.log
+  if [ -z "$(ls $(echo "${mnt}/${PATTERN}"))" ]; then
+    echo "Exporting..." >>/tmp/mountcopy.log
+    cp $(echo "${DESTINATION}/${PATTERN}") "$mnt/" 2>>/tmp/mountcopy.log || exit 105
+  else
+    echo "Importing..." >>/tmp/mountcopy.log
+    cp $(echo "$mnt/$PATTERN") "$DESTINATION/" 2>>/tmp/mountcopy.log || exit 102
+  fi
+}
+
+do_unmount() {
+    $log "Removing: ${DEVICE}-${ID_FS_LABEL:-}-${DEVBASE}"
+    MOUNT_POINT=$(/bin/mount | /bin/egrep "^${DEVICE}" | /usr/bin/awk '{ print $3 }')
+    if [[ -z ${MOUNT_POINT} ]]; then
+        $log "Предупреждение: ${DEVICE} не примонтировано"
+    else
+        /bin/umount -l ${DEVICE}
+        $log "**** Отмонтировано ${DEVICE} **** Удаление точки монтирования ${MOUNT_POINT} и записи в /etc/fstab"
+    fi
+    [ -d "$MOUNT_POINT" ] && /bin/rmdir "$MOUNT_POINT"
+    sed -i "/^${DEVICE//\//\\/}\s\+${MOUNT_POINT//\//\\/}/d" /etc/fstab
+}
+
+case "${ACTION}" in
+    add) do_mount ;;
+    remove) do_unmount ;;
+    *) usage ;;
+esac
