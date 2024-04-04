@@ -7,7 +7,7 @@ mkdir ${HOME}/klipper_usb_autocopy
 cd ${HOME}/klipper_usb_autocopy || exit
 
 # Задаем пути к файлам на Github
-GITHUB_REPO="https://raw.githubusercontent.com/konk22/klipper_usb_autocopy/master"
+GITHUB_REPO="https://raw.githubusercontent.com/konk22/3Def_Voron_2.4r2/main/manual/klipper_usb_autocopy/"
 RULES_FILE="99-mountcopy.rules"
 SERVICE_FILE="usb-mount@.service"
 MOUNTCOPY_SCRIPT="mountcopy"
