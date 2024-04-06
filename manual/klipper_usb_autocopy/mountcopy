@@ -1,65 +1,85 @@
 #!/bin/sh
 
+# Set environment variables
 export PATH=/bin:/usr/bin
 
-
-# CONSTANTS
+# Constants
 PATTERN="*.gcode"
-
-# For Raspberry Pi use
 DESTINATION="/home/pi/printer_data/gcodes"
+LOG_FILE="/tmp/mountcopy.log"
 
-ACTION=${1:-}
-device=${2:-}
-
+# Functions
 do_mount() {
+    if [ -z "$DEVICE" ]; then
+        echo "Missing block device name!" >> "$LOG_FILE"
+        exit 1
+    fi
 
-  if [ -z "$device" ]; then
-    echo "Missing block device name!" >>/tmp/mountcopy.log
-    exit 1
-  fi
+    mnt=$(mktemp -d)
+    filesystem=$(lsblk -no FSTYPE "/dev/$DEVICE")
 
-  mnt=$(mktemp -d)
-  filesystem=$(lsblk -no FSTYPE "/dev/$device")
+    case "$filesystem" in
+        vfat)
+            mount -t vfat -o codepage=866,iocharset=utf8 "/dev/$DEVICE" "$mnt" 2>> "$LOG_FILE" || exit 106
+            ;;
+        exfat)
+            mount -t exfat -o utf8 "/dev/$DEVICE" "$mnt" 2>> "$LOG_FILE" || exit 106
+            ;;
+        ntfs | ntfs-3g)
+            mount -t ntfs-3g -o rw,nls=utf8 "/dev/$DEVICE" "$mnt" 2>> "$LOG_FILE" || exit 106
+            ;;
+        *)
+            echo "Unsupported filesystem: $filesystem" >> "$LOG_FILE" || exit 107
+            exit 107
+            ;;
+    esac
 
-  if [ "$filesystem" = "vfat" ]; then
-      mount -t vfat -o codepage=866,iocharset=utf8 "/dev/$device" "$mnt" 2>>/tmp/mountcopy.log || exit 106
-  elif [ "$filesystem" = "exfat" ]; then
-      mount -t exfat -o utf8 "/dev/$device" "$mnt" 2>>/tmp/mountcopy.log || exit 106
-  elif [ "$filesystem" = "ntfs" ] || [ "$filesystem" = "ntfs-3g" ]; then
-      mount -t ntfs-3g -o rw,nls=utf8 "/dev/$device" "$mnt" 2>>/tmp/mountcopy.log || exit 106
-  else
-      echo "Unsupported filesystem: $filesystem">>/tmp/mountcopy.log || exit 106
-      exit 107
-  fi
+    umask 0111
 
-  umask 0111
-
-  echo "" > /tmp/mountcopy.log
-  if [ -z "$(ls $(echo "${mnt}/${PATTERN}"))" ]; then
-    echo "Exporting..." >>/tmp/mountcopy.log
-    cp $(echo "${DESTINATION}/${PATTERN}") "$mnt/" 2>>/tmp/mountcopy.log || exit 105
-  else
-    echo "Importing..." >>/tmp/mountcopy.log
-    cp $(echo "$mnt/$PATTERN") "$DESTINATION/" 2>>/tmp/mountcopy.log || exit 102
-  fi
+    echo "" > "$LOG_FILE"
+    if [ -z "$(ls $(echo "${mnt}/${PATTERN}"))" ]; then
+        echo "Exporting..." >> "$LOG_FILE"
+        cp $(echo "${DESTINATION}/${PATTERN}") "$mnt/" 2>> "$LOG_FILE" || exit 105
+    else
+        echo "Importing..." >> "$LOG_FILE"
+        cp $(echo "$mnt/$PATTERN") "$DESTINATION/" 2>> "$LOG_FILE" || exit 102
+    fi
 }
 
 do_unmount() {
-    $log "Removing: ${DEVICE}-${ID_FS_LABEL:-}-${DEVBASE}"
+    log "Removing: ${DEVICE}-${ID_FS_LABEL:-}-${DEVBASE}"
     MOUNT_POINT=$(/bin/mount | /bin/egrep "^${DEVICE}" | /usr/bin/awk '{ print $3 }')
     if [[ -z ${MOUNT_POINT} ]]; then
-        $log "Предупреждение: ${DEVICE} не примонтировано"
+        log "Warning: ${DEVICE} not mounted"
     else
-        /bin/umount -l ${DEVICE}
-        $log "**** Отмонтировано ${DEVICE} **** Удаление точки монтирования ${MOUNT_POINT} и записи в /etc/fstab"
+        /bin/umount -l "${DEVICE}"
+        log "**** Unmounted ${DEVICE} **** Removing mount point ${MOUNT_POINT} and entry from /etc/fstab"
     fi
     [ -d "$MOUNT_POINT" ] && /bin/rmdir "$MOUNT_POINT"
     sed -i "/^${DEVICE//\//\\/}\s\+${MOUNT_POINT//\//\\/}/d" /etc/fstab
 }
 
+usage() {
+    echo "Usage: $0 {add|remove}" >&2
+    exit 1
+}
+
+# Main
+ACTION="${1:-}"
+DEVICE="${2:-}"
+
 case "${ACTION}" in
-    add) do_mount ;;
+    add)
+        do_mount
+        # Check if all files were copied successfully and then add "Finish" to log
+        if [ -z "$(ls "${DESTINATION}/${PATTERN}")" ]; then
+            sleep 3
+            echo "Finish" >> "$LOG_FILE"
+            echo "SET_PIN PIN=beeper VALUE=1" > ~/printer_data/comms/klippy.serial
+            sleep 0.5
+            echo "SET_PIN PIN=beeper VALUE=0" > ~/printer_data/comms/klippy.serial
+        fi
+        ;;
     remove) do_unmount ;;
     *) usage ;;
 esac
